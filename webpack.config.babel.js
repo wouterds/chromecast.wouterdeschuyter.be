@@ -94,13 +94,21 @@ let config = {
           name: '[hash:7].[ext]',
         },
       },
+      {
+        test: /\.appcache$/,
+        loader: 'file-loader',
+        options: {
+          publicPath: '/',
+          name: '[hash:7].[ext]',
+        },
+      },
     ],
   },
   plugins: [
     new FlowBabelWebpackPlugin(),
     new HtmlWebpackPlugin({
       filename: path.resolve(__dirname, './public/index.html'),
-      template: path.resolve(__dirname, './src/index.html'),
+      template: path.resolve(__dirname, './resources/index.html'),
     }),
     new LoaderOptionsPlugin({
       minimize: production,

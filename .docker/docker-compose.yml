@@ -2,11 +2,11 @@ version: '2'
 
 services:
   nginx:
-    image: docker.wouterdeschuyter.be/react-web-boilerplate-nginx
+    image: docker.wouterdeschuyter.be/chromecast-receiver-app-nginx
     restart: on-failure
     environment:
-      - VIRTUAL_HOST=react-web-boilerplate.wouterdeschuyter.be
-      - LETSENCRYPT_HOST=react-web-boilerplate.wouterdeschuyter.be
+      - VIRTUAL_HOST=chromecast.wouterdeschuyter.be
+      - LETSENCRYPT_HOST=chromecast.wouterdeschuyter.be
       - LETSENCRYPT_EMAIL=wouter.de.schuyter@gmail.com
     networks:
       - default
