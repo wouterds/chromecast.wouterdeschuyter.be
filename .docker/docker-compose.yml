@@ -1,0 +1,18 @@
+version: '2'
+
+services:
+  nginx:
+    image: docker.wouterdeschuyter.be/react-web-boilerplate-nginx
+    container_name: react-web-boilerplate
+    restart: on-failure
+    environment:
+      - VIRTUAL_HOST=react-web-boilerplate.wouterdeschuyter.be
+      - LETSENCRYPT_HOST=react-web-boilerplate.wouterdeschuyter.be
+      - LETSENCRYPT_EMAIL=wouter.de.schuyter@gmail.com
+    networks:
+      - default
+      - webproxy
+
+networks:
+  webproxy:
+    external: true
