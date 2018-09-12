@@ -1,5 +1,6 @@
 {
   "dependencies": {
-    "castv2-client": "^1.2.0"
+    "castv2-client": "^1.2.0",
+    "nodecast": "^1.0.1"
   }
 }

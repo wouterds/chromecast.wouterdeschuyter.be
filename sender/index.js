@@ -1,7 +1,6 @@
 const util = require('util');
 const castv2 = require('castv2-client');
-
-const CHROMECAST_IP = '10.10.10.14';
+const nodecast = require('nodecast');
 
 function DashboardController(client, sourceId, destinationId) {
   castv2.RequestResponseController.call(this, client, sourceId, destinationId, 'urn:x-cast:be.wouterdeschuyter.chromecast');
@@ -27,23 +26,29 @@ class Dashboard extends castv2.Application {
 
 Dashboard.APP_ID = '7D24DA96';
 
-const client = new castv2.Client();
+const network = nodecast.find();
 
-client.connect(CHROMECAST_IP, () => {
-  client.launch(Dashboard, (err, app) => {
-    if (err) {
-      console.error(err);
-    } else {
+network.on('device', device => {
+  const ip = new URL(device.httpBase).hostname;
+
+  console.log(`Connecting to ${ip}`);
+
+  const client = new castv2.Client();
+  client.on('status', e => console.log('Status', e));
+  client.on('error', e => {
+    console.error('Error', e.message);
+    client.close();
+  });
+
+  client.connect(ip, () => {
+    client.launch(Dashboard, (err, app) => {
+      if (err) {
+        console.error(err);
+        return;
+      }
+
       app.setUrl('https://promo-widget.delta.app/');
-    }
+    });
   });
 });
 
-client.on('status', (event) => {
-  console.log('Status event', event);
-});
-
-client.on('error', (err) => {
-  console.error('Error occured', err.message);
-  client.close();
-});
